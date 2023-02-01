@@ -18,5 +18,5 @@ The queries showed that three former world champions are the ones with more poin
 
 Dashboard
 ---
-![F1 Driver's Performance ](https://user-images.githubusercontent.com/102596118/215922319-0ad863b9-9eba-4105-9d93-94de97eb15de.png)
+To see the dinamic dashboard go to the follwoing link: ![F1 Driver's Performance ](https://user-images.githubusercontent.com/102596118/215922319-0ad863b9-9eba-4105-9d93-94de97eb15de.png)
 https://public.tableau.com/views/f1_DataAnalysis/F1DriversPerformance?:language=en-US&:display_count=n&:origin=viz_share_link
