@@ -21,3 +21,7 @@ Dashboard
 The following dashboard presents some of the metrics that were analyzed in this project. Some of the top F1 drivers were included to see their number of podiums, wins, and total points during thier F1 career. 
 ![F1 Driver's Performance ](https://user-images.githubusercontent.com/102596118/215922319-0ad863b9-9eba-4105-9d93-94de97eb15de.png)
 To see the dinamic dashboard go to the follwoing link: https://public.tableau.com/views/f1_DataAnalysis/F1DriversPerformance?:language=en-US&:display_count=n&:origin=viz_share_link
+
+Notes
+---
+*Database does not include all 2022 races. 
