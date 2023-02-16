@@ -3,6 +3,7 @@
 --Total Points by Driver after year 2000
 --notes: change #points from string to integer 
 SELECT DISTINCT d.forename, d.surname, SUM(CAST(r.points AS decimal)) AS Total_points
+--INTO Total_Points_Driver_2000
 FROM circuits AS c
 INNER JOIN races AS rac
 ON c.circuitId = rac.circuitId
@@ -19,6 +20,7 @@ ORDER BY SUM(CAST(r.points AS decimal)) DESC;
 
 --TOTAL WINS BY EACH DRIVER
 SELECT DISTINCT d.forename,d.surname, COUNT(CAST(position AS int)) AS Total_Wins
+--INTO total_wins_driver
 FROM results AS r
 INNER JOIN drivers AS d
 ON r.driverId = d.driverId
@@ -28,6 +30,7 @@ ORDER BY COUNT(CAST(position AS int))DESC;
 
 --LEWIS HAMILTON Wins by team
 SELECT d.forename,d.surname, COUNT(CAST(position AS int)) AS Total_Wins, c.name
+--INTO Lewis_hamilton_wins
 FROM results AS r
 INNER JOIN drivers AS d
 ON r.driverId = d.driverId
@@ -39,6 +42,7 @@ ORDER BY COUNT(CAST(position AS int))DESC;
 
 --Sebastian Vettel Podiums by team
 SELECT d.forename,d.surname, COUNT(CAST(position AS int)) AS Number_of_Podiums, c.name
+--INTO sebas_vettel_podiums
 FROM results AS r
 INNER JOIN drivers AS d
 ON r.driverId = d.driverId
@@ -50,6 +54,7 @@ ORDER BY COUNT(CAST(position AS decimal))DESC;
 
 --Fastest Lap by circuit and year
 SELECT DISTINCT rac.name AS Grand_Prix,rac.date, MIN(r.fastestLapTime) AS FastestTime, rac.year--,d.forename, d.surname
+--INTO fastest_lap_bycircuit_byyear
 FROM circuits AS c
 INNER JOIN races AS rac
 ON c.circuitId = rac.circuitId
@@ -64,6 +69,7 @@ ORDER BY rac.year,rac.date, MIN(r.fastestLapTime)
 
 --Winners of the Canada Grand Prix after 2000
 SELECT DISTINCT rac.name AS Grand_Prix, rac.year, d.forename, d.surname
+--INTO canada_GP_winners_aft2000
 FROM circuits AS c
 INNER JOIN races AS rac
 ON c.circuitId = rac.circuitId
@@ -93,7 +99,8 @@ SELECT rac.name, d.forename, d.surname, CAST(r.position AS int) AS position,
 	CASE WHEN r.position = 1 THEN 'Victory'
 		 WHEN r.position IN (2,3) THEN 'Podium'
 		 WHEN r.position BETWEEN 4 AND 10 THEN 'Points'
-		 ELSE 'Other' END AS Outcome 
+		 ELSE 'Other' END AS Outcome
+--INTO vic_pod_poin_Monaco2022
 FROM circuits AS c
 INNER JOIN races AS rac
 ON c.circuitId = rac.circuitId
@@ -203,3 +210,72 @@ WHERE rac.year = 2021 --AND r.position <> '\N'
 GROUP BY CAST(rac.date AS DATE), rac.name
 ORDER BY CAST(rac.date AS DATE), COUNT(CASE WHEN r.position = '\N' THEN 'DNF'END) DESC;
 
+SELECT *
+--INTO rrr
+FROM results;
+
+
+-- Set up your CTE
+WITH cte AS (
+    SELECT TOP 100
+  		rac.name AS GP, 
+		rac.date as Date, 
+		con.name AS Constructor,
+		SUM(CAST(r.points AS decimal)) AS Total_Points
+    FROM results AS r
+    LEFT JOIN races as rac 
+	ON r.raceId = rac.raceid
+	LEFT JOIN constructors AS con 
+	ON r.constructorId = con.constructorId
+	WHERE r.points <> '\N'
+	GROUP BY con.name, rac.name, rac.date
+	ORDER BY SUM(CAST(r.points AS decimal)) DESC
+	)
+-- Select the league, date, home, and away goals from the CTE
+SELECT GP, Date,Constructor,Total_Points
+FROM cte
+-- Filter by total goals
+WHERE Total_Points >20;
+
+
+-- Using Windows Functions 
+--Finding the differnce between the shortest pit stop and the other pit stops in the Austrian GP in 2021
+SELECT 
+	con.name AS constructor,
+	rac.name,
+	d.forename, d.surname,
+	CAST(pit.milliseconds AS decimal)/1000 AS pit_duration,
+	-- Use a window to include the aggregate average in each row
+	MIN(CAST(pit.milliseconds AS decimal) /1000) OVER() AS Min_pit_duration,
+	(CAST(pit.milliseconds AS decimal) /1000) - (MIN(CAST(pit.milliseconds AS decimal) /1000) OVER()) AS Diff
+ FROM results AS r
+    LEFT JOIN races as rac 
+	ON r.raceId = rac.raceid
+	LEFT JOIN constructors AS con 
+	ON r.constructorId = con.constructorId
+	LEFT JOIN pit_stops AS pit
+	ON r.raceId = pit.raceId
+	LEFT JOIN drivers AS d
+	ON r.driverId = d.driverId
+	WHERE pit.duration IS NOT NULL AND rac.year = 2021 and rac.name = 'Austrian Grand Prix'
+
+
+--Partirtion by two columns
+	SELECT 
+	con.name AS constructor,
+	rac.name,
+	d.forename, d.surname, rac.year,
+	CAST(pit.milliseconds AS decimal)/1000 AS pit_duration,
+	-- Use a window to include the aggregate average in each row
+	MIN(CAST(pit.milliseconds AS decimal) /1000) OVER(PARTITION BY year) AS Min_pit_duration
+	--(CAST(pit.milliseconds AS decimal) /1000) - (MIN(CAST(pit.milliseconds AS decimal) /1000) OVER()) AS Diff
+ FROM results AS r
+    LEFT JOIN races as rac 
+	ON r.raceId = rac.raceid
+	LEFT JOIN constructors AS con 
+	ON r.constructorId = con.constructorId
+	LEFT JOIN pit_stops AS pit
+	ON r.raceId = pit.raceId
+	LEFT JOIN drivers AS d
+	ON r.driverId = d.driverId
+	WHERE pit.duration IS NOT NULL AND rac.year > 2020 
