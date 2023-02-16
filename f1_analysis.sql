@@ -214,7 +214,7 @@ SELECT *
 --INTO rrr
 FROM results;
 
-
+--Top 100 of Maximum points made by a constructor in one race 
 -- Set up your CTE
 WITH cte AS (
     SELECT TOP 100
@@ -260,7 +260,8 @@ SELECT
 	WHERE pit.duration IS NOT NULL AND rac.year = 2021 and rac.name = 'Austrian Grand Prix'
 
 
---Partirtion by two columns
+--Partirtion by year
+--Finding the differnce between the shortest pit stop and the other pit stops by year and by GP 
 	SELECT 
 	con.name AS constructor,
 	rac.name,
