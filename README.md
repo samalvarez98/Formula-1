@@ -10,7 +10,7 @@ To allow viewers to observe different metrics of F1 drivers, races, and seasons 
 
 Deliverable
 ---
-SQL queries using joins, subqueries, CASE, aggregate, CTE, and window functions that show F1 metrics.
+SQL queries using joins, subqueries, CASE, aggregate, CTE, and window functions that show F1 metrics. (See queries)
 
 Results
 ---
