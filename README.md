@@ -2,7 +2,7 @@
 ---
 Project Purpose
 ---
-The following project consisted in analazing historical data of Formula 1 seasons and races in Microsoft SQL Server. I personally am  a fan of Formula 1 and wanted to explore the historical data to see drivers performcances. Therefore, I found this database intersting to apply my SQL skills and also discovering one of the sports I enjoy the most.    
+The following project consisted in analazing historical data of Formula 1 seasons and races in Microsoft SQL Server. I am  a fan of Formula 1 and wanted to explore the historical data to see drivers performcances. Therefore, I found this database intersting to apply my SQL skills and also discovering one of the sports I enjoy the most.    
 
 Goal
 ---
@@ -24,4 +24,4 @@ To see the dinamic dashboard go to the follwoing link: https://public.tableau.co
 
 Notes
 ---
-*Database does not include all 2022 races. 
+*Database does not include all 2022 and 2023 races. 
