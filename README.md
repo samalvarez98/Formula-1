@@ -2,11 +2,11 @@
 ---
 Project Purpose
 ---
-The following project consisted in analazing historical data of Formula 1 seasons and races in Microsoft SQL Server. I am  a fan of Formula 1 and wanted to explore the historical data to see drivers performcances. Therefore, I found this database intersting to apply my SQL skills and also discovering one of the sports I enjoy the most.    
-
+During the last five years, Formula 1 has gained notorious popularity worldwide. With large databases to analyze, data analysts could spend many hours and days building projects about this entertaining and exciting sport. In the following project, a Formula 1 Database was used to do a short analysis and evaluate the performance of F1 drivers and the overall resolution of an entire season in Formula 1. I found this database intersting to apply my SQL skills and also discovering one of the sports I enjoy the most.
+   
 Goal
 ---
-To allow viewers to observe different metrics of F1 drivers, races, and seasons in the last twenty years, but specifically in recent years.
+To allow viewers to observe different metrics of F1 drivers, races, and seasons in the last twenty years, but specifically in the last three years.
 
 Deliverable
 ---
