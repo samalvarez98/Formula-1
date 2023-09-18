@@ -232,10 +232,11 @@ WITH cte AS (
 	ORDER BY SUM(CAST(r.points AS decimal)) DESC
 	)
 -- Select the league, date, home, and away goals from the CTE
-SELECT GP, Date,Constructor,Total_Points
+SELECT GP, CONVERT(Date,Date)AS Date,Constructor,Total_Points
 FROM cte
 -- Filter by total goals
-WHERE Total_Points >20;
+WHERE Total_Points >20
+ORDER BY date;
 
 
 -- Using Windows Functions 
